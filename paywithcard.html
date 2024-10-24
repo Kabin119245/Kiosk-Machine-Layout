@@ -114,13 +114,6 @@
           height: 50px;
         }
       }
-
-      /* Error message styling */
-      .error {
-        color: red;
-        font-size: 14px;
-        display: none;
-      }
     </style>
   </head>
   <body>
@@ -148,11 +141,6 @@
         </div>
       </div>
 
-      <!-- Error message for payment method -->
-      <div id="paymentMethodError" class="error">
-        Please select a payment method.
-      </div>
-
       <!-- Payment Input Fields -->
       <div class="payment-input">
         <input
@@ -160,49 +148,27 @@
           id="cardNumber"
           class="form-control mb-1"
           placeholder="Card Number"
-          pattern="\d{16}"
-          required
-          title="Please enter a valid 16-digit card number."
         />
-        <div id="cardNumberError" class="error">
-          Card number must be 16 digits.
-        </div>
-
         <input
           type="text"
           id="expiryDate"
           class="form-control mb-1"
           placeholder="Expiry Date (MM/YY)"
-          required
-          title="Please enter a valid expiry date in the format MM/YY."
         />
-        <div id="expiryDateError" class="error">
-          Expiry date must be in MM/YY format.
-        </div>
-
         <input
           type="text"
           id="cvv"
           class="form-control mb-1"
           placeholder="CVV"
-          pattern="\d{3}"
-          required
-          title="Please enter a valid 3-digit CVV."
         />
-        <div id="cvvError" class="error">CVV must be 3 digits.</div>
       </div>
 
       <!-- Action Buttons (Go Back & Pay Now) -->
       <div class="action-buttons">
         <a href="drivinglicense.html" class="btn btn-secondary">Go Back</a>
-        <button class="btn btn-primary" onclick="validateForm()">
+        <button class="btn btn-primary" onclick="goToConfirmation()">
           Pay Now
         </button>
-      </div>
-
-      <!-- Error message for invalid form -->
-      <div id="formError" class="error">
-        Please fill out the form correctly.
       </div>
     </div>
 
@@ -215,62 +181,12 @@
         options.forEach((option) => option.classList.remove("selected"));
         element.classList.add("selected");
         selectedPaymentMethod = element.getAttribute("data-type");
-
-        // Hide payment method error
-        document.getElementById("paymentMethodError").style.display = "none";
       }
 
-      // Function to validate form inputs
-      function validateForm() {
-        const cardNumber = document.getElementById("cardNumber");
-        const expiryDate = document.getElementById("expiryDate");
-        const cvv = document.getElementById("cvv");
-        let valid = true;
-
-        // Check if payment method is selected
-        if (!selectedPaymentMethod) {
-          document.getElementById("paymentMethodError").style.display = "block";
-          valid = false;
-        }
-
-        // Validate card number
-        if (!cardNumber.value.match(/^\d{16}$/)) {
-          document.getElementById("cardNumberError").style.display = "block";
-          valid = false;
-        } else {
-          document.getElementById("cardNumberError").style.display = "none";
-        }
-
-        // Validate expiry date
-        if (!expiryDate.value.match(/^(0[1-9]|1[0-2])\/\d{2}$/)) {
-          document.getElementById("expiryDateError").style.display = "block";
-          valid = false;
-        } else {
-          document.getElementById("expiryDateError").style.display = "none";
-        }
-
-        // Validate CVV
-        if (!cvv.value.match(/^\d{3}$/)) {
-          document.getElementById("cvvError").style.display = "block";
-          valid = false;
-        } else {
-          document.getElementById("cvvError").style.display = "none";
-        }
-
-        if (valid) {
-          window.location.href = "confirmation.html";
-        }
+      // Function to proceed to the confirmation page
+      function goToConfirmation() {
+        window.location.href = "confirmation.html"; // Redirect to confirmation page
       }
-
-      // Automatically add "/" after entering two digits for the month in the expiry date
-      document
-        .getElementById("expiryDate")
-        .addEventListener("input", function (e) {
-          const value = e.target.value;
-          if (value.length === 2 && !value.includes("/")) {
-            e.target.value = value + "/";
-          }
-        });
     </script>
   </body>
 </html>
