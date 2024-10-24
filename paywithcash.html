@@ -17,24 +17,38 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        background-image: url("path-to-background-image.jpg"); /* Add hotel background */
+        background-size: cover;
+        overflow: hidden;
       }
 
       .form-container {
         text-align: center;
         max-width: 100%;
         padding: 0 20px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        transition: margin-top 0.5s ease;
       }
 
       h2 {
         font-size: 36px;
         font-weight: bold;
         color: #333;
-        margin-bottom: 15px;
+        margin-bottom: 10px; /* Reduced margin */
       }
 
       .cash-instruction p {
         font-size: 18px;
         color: #555;
+        margin-bottom: 10px; /* Reduced margin */
+      }
+
+      .cash-instruction img {
+        width: 200px;
+        margin: 10px 0; /* Reduced margin to bring buttons closer */
       }
 
       .btn-primary,
@@ -66,6 +80,10 @@
       .btn-assist {
         background-color: #17a2b8;
         color: white;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1001;
       }
 
       .btn-assist:hover {
@@ -80,27 +98,35 @@
         background-color: #218838;
       }
 
-      /* Align buttons in a typical kiosk layout */
       .button-group {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 15px;
-        margin-top: 30px;
+        gap: 10px; /* Reduced gap between buttons */
+        margin-top: 10px; /* Reduced margin between buttons and image */
       }
 
       .navigation-buttons {
         display: flex;
         justify-content: center;
         gap: 20px;
-        margin-top: 30px;
+        margin-top: 15px;
       }
 
-      /* Prevents body from scrolling */
-      html,
-      body {
-        overflow: hidden;
+      #videoCallWindow {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        text-align: center;
+        color: white;
+        padding-top: 50px;
+        font-size: 24px;
       }
 
       .container {
@@ -109,95 +135,98 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-      }
-
-      /* Style for the video call window */
-      #videoCallWindow {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50%;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.8
-        ); /* Black background with opacity */
-        z-index: 1000;
-        text-align: center;
-        color: white;
-        padding-top: 50px;
-        font-size: 24px;
+        transition: margin-top 0.5s ease;
       }
     </style>
   </head>
   <body>
     <!-- Video Assistance Placeholder Window -->
-    <div id="videoCallWindow">Operator Assistance - Video Call (Simulated)</div>
+    <div id="videoCallWindow">
+      <div style="padding: 20px; color: white">
+        <h3>Video</h3>
+        <img src="video-frame.png" alt="Video Insturction" style="width: 60%" />
+      </div>
+    </div>
 
-    <div class="container form-container">
+    <div id="formContainer" class="container form-container">
       <h2>Payment</h2>
       <div class="cash-instruction">
         <p>Please insert $10 (or any amount) into the cash dispenser below:</p>
+        <!-- Add a cash slot graphic -->
+        <img src="images/card-dispenser.webp" alt="Cash Dispenser" />
       </div>
 
-      <!-- Button Group for Payment Options -->
       <div class="button-group">
-        <!-- Insert Cash Button with no functionality -->
-        <button class="btn btn-primary" disabled>Insert Cash</button>
+        <!-- Insert Cash Button -->
+        <button
+          id="insertCashBtn"
+          class="btn btn-primary"
+          onclick="insertCash()"
+        >
+          Insert Cash
+        </button>
 
         <!-- Pay with Card Button -->
         <button class="btn btn-primary" onclick="proceedToCardPayment()">
           Pay with Card
         </button>
-
-        <!-- Operator Assistance -->
-        <button class="btn btn-assist" onclick="showVideoWindow()">
-          Tap for Operator Assistance
-        </button>
       </div>
 
       <!-- Navigation Buttons for Go Back and Next Step -->
       <div class="navigation-buttons">
-        <a href="roomlist.html" class="btn btn-secondary">Go Back</a>
+        <a href="drivinglicense.html" class="btn btn-secondary">Go Back</a>
         <button class="btn btn-next" onclick="goToNextPage()">Go Next</button>
       </div>
     </div>
 
+    <!-- Operator Assistance Button in Top-Right Corner -->
+    <button
+      id="assistButton"
+      class="btn btn-assist"
+      onclick="toggleVideoWindow()"
+    >
+      Tap for Operator Assistance
+    </button>
+
     <script>
-      // Function to simulate proceeding to the card payment page
+      let videoOpen = false;
+
+      // Function to simulate cash insertion (just changing the button text)
+      function insertCash() {
+        const btn = document.getElementById("insertCashBtn");
+        btn.innerHTML = "Cash Accepted";
+        btn.disabled = true;
+      }
+
+      // Function to simulate proceeding to card payment page
       function proceedToCardPayment() {
-        window.location.href = "paywithcard.html"; // Direct to the card payment page
+        window.location.href = "paywithcard.html"; // Redirect to card payment page
       }
 
-      // Function to navigate to the confirmation page
+      // Function to navigate to the next page (confirmation)
       function goToNextPage() {
-        window.location.href = "confirmation.html"; // Direct to the confirmation page
+        window.location.href = "confirmation.html"; // Redirect to the confirmation page
       }
 
-      // Function to show the video call window
-      function showVideoWindow() {
+      // Function to toggle the video assistance window and adjust layout
+      function toggleVideoWindow() {
         const videoWindow = document.getElementById("videoCallWindow");
-        videoWindow.style.display = "block";
+        const formContainer = document.getElementById("formContainer");
+        const assistButton = document.getElementById("assistButton");
 
-        // Add event listener to close the window when clicking outside
-        document.addEventListener("click", closeVideoWindow);
-      }
-
-      // Function to hide the video call window when clicking outside the video window
-      function closeVideoWindow(event) {
-        const videoWindow = document.getElementById("videoCallWindow");
-
-        // Close the window only if the click is outside the video window itself
-        if (
-          !event.target.closest("#videoCallWindow") &&
-          !event.target.closest(".btn-assist")
-        ) {
+        if (!videoOpen) {
+          // Show the video window, move content down
+          videoWindow.style.display = "block";
+          formContainer.style.marginTop = "50vh"; // Move content down to make space for video
+          assistButton.innerHTML = "Close Video";
+        } else {
+          // Hide the video window, move content back up
           videoWindow.style.display = "none";
-          document.removeEventListener("click", closeVideoWindow);
+          formContainer.style.marginTop = "0"; // Move content back to center
+          assistButton.innerHTML = "Tap for Operator Assistance";
         }
+
+        videoOpen = !videoOpen; // Toggle video state
       }
     </script>
   </body>

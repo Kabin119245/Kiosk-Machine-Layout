@@ -17,12 +17,14 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        overflow: hidden;
       }
 
       .form-container {
         text-align: center;
         max-width: 100%;
         padding: 0 20px;
+        transition: margin-top 0.5s ease; /* Add smooth transition when margin-top changes */
       }
 
       h2 {
@@ -35,6 +37,12 @@
       .license-instruction p {
         font-size: 18px;
         color: #555;
+      }
+
+      .license-image {
+        margin: 12px 0; /* Adds some spacing around the image */
+        width: 300px; /* You can adjust the width as needed */
+        height: auto;
       }
 
       .btn-primary {
@@ -63,28 +71,21 @@
         display: flex;
         justify-content: center;
         margin-top: 20px;
-        gap: 10px; /* Adds some space between the Go Back and Next Step buttons */
+        gap: 10px;
       }
 
-      /* Placeholder video call window */
-      #videoCallWindow {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50vh;
-        background-color: black;
-        z-index: 1000;
-      }
-
+      /* Position the operator assistance button in the top-right corner */
       .btn-assist {
         background-color: #17a2b8;
         color: white;
         font-size: 18px;
         padding: 10px 20px;
         border-radius: 50px;
-        margin-top: 20px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1001;
+        transition: background-color 0.3s;
       }
 
       .btn-assist:hover {
@@ -101,24 +102,17 @@
         margin-top: 30px;
       }
 
-      /* Smaller button size */
-      button {
-        width: 200px; /* Set a fixed width for buttons */
-      }
-
-      /* Prevents body from scrolling and ensures everything fits without scrolling */
-      html,
-      body {
-        overflow: hidden;
-      }
-
+      /* Initially center the content on the screen */
       .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100vh; /* Vertically center everything */
+        height: 100vh;
+        transition: margin-top 0.5s ease; /* Smooth transition when content moves down */
       }
+
+      /* Video window styles */
       #videoCallWindow {
         display: none;
         position: absolute;
@@ -126,12 +120,7 @@
         left: 0;
         width: 100%;
         height: 50%;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.8
-        ); /* Black background with opacity */
+        background-color: rgba(0, 0, 0, 0.8);
         z-index: 1000;
         text-align: center;
         color: white;
@@ -142,21 +131,26 @@
   </head>
   <body>
     <!-- Video Assistance Placeholder Window -->
-    <div id="videoCallWindow">Operator Assistance - Video Call (Simulated)</div>
+    <div id="videoCallWindow" class="video-window-content">
+      Operator Assistance - Video Call (Simulated)
+    </div>
 
-    <div class="container form-container">
+    <div id="formContainer" class="container form-container">
       <h2>Scan Your License Using the Scanner</h2>
+
+      <!-- License Image Below the Heading -->
+      <img
+        src="images/license.png"
+        alt="Driving License"
+        class="license-image"
+      />
+
       <div class="license-instruction">
         <p>Please scan your driving license using the scanner below:</p>
       </div>
 
       <!-- Button Group for a More Appealing Layout -->
       <div class="button-group">
-        <!-- Button for Operator Assistance -->
-        <button class="btn btn-assist" onclick="showVideoWindow()">
-          Tap for Operator Assistance
-        </button>
-
         <!-- Scan License Button -->
         <button class="btn btn-primary">Scan License</button>
       </div>
@@ -168,30 +162,37 @@
       </div>
     </div>
 
+    <!-- Operator Assistance Button in Top-Right Corner -->
+    <button
+      id="assistButton"
+      class="btn btn-assist"
+      onclick="toggleVideoWindow()"
+    >
+      Tap for Operator Assistance
+    </button>
+
     <script>
-      // Function to show the blank video call window
-      function showVideoWindow() {
+      let videoOpen = false;
+
+      // Function to show or hide the video call window and adjust the layout
+      function toggleVideoWindow() {
         const videoWindow = document.getElementById("videoCallWindow");
-        videoWindow.style.display = "block";
+        const formContainer = document.getElementById("formContainer");
+        const assistButton = document.getElementById("assistButton");
 
-        // Add event listener to close window when clicking outside the video area
-        document.addEventListener("click", closeVideoWindow);
-      }
-
-      // Function to hide the video call window when clicking outside the video window
-      function closeVideoWindow(event) {
-        const videoWindow = document.getElementById("videoCallWindow");
-
-        // If the click is outside the video window and not on the buttons
-        if (
-          !event.target.closest("#videoCallWindow") &&
-          !event.target.closest(".btn-assist")
-        ) {
+        if (!videoOpen) {
+          // Show the video window and move content down
+          videoWindow.style.display = "block";
+          formContainer.style.marginTop = "50vh"; // Move content down to make space for video
+          assistButton.innerHTML = "Close Video";
+        } else {
+          // Hide the video window and move content back to center
           videoWindow.style.display = "none";
-
-          // Remove event listener once the window is hidden
-          document.removeEventListener("click", closeVideoWindow);
+          formContainer.style.marginTop = "0"; // Move content back to center
+          assistButton.innerHTML = "Tap for Operator Assistance";
         }
+
+        videoOpen = !videoOpen; // Toggle video state
       }
     </script>
   </body>
