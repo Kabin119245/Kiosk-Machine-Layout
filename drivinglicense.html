@@ -76,21 +76,26 @@
 
       /* Position the operator assistance button in the top-right corner */
       .btn-assist {
-        background-color: #17a2b8;
-        color: white;
-        font-size: 18px;
-        padding: 10px 20px;
-        border-radius: 50px;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        z-index: 1001;
-        transition: background-color 0.3s;
-      }
+  background-color: #17a2b8; /* Teal color */
+  color: white;
+  font-size: 16px; /* Adjust font size */
+  padding: 12px 30px; /* Adjust padding for width and height */
+  border-radius: 50px; /* Rounded corners */
+  border: none; /* Remove border */
+  text-align: center; /* Center text */
+  white-space: nowrap; /* Prevent text wrapping */
+  line-height: 1.2; /* Ensure consistent height */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
 
-      .btn-assist:hover {
-        background-color: #138496;
-      }
+.btn-assist:hover {
+  background-color: #138496; /* Darker teal on hover */
+}
+
 
       /* Center buttons and align them vertically */
       .button-group {

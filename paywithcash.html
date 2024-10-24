@@ -10,25 +10,27 @@
     />
     <style>
       body {
-        background-color: #f0f0f5;
+        background: linear-gradient(
+          135deg,
+          #e0f7fa,
+          #b2ebf2
+        ); /* Light gradient background */
         font-family: "Arial", sans-serif;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        background-image: url("path-to-background-image.jpg"); /* Add hotel background */
-        background-size: cover;
         overflow: hidden;
       }
 
       .form-container {
         text-align: center;
         max-width: 100%;
-        padding: 0 20px;
+        padding: 20px;
         background-color: white;
         border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
         padding: 30px;
         transition: margin-top 0.5s ease;
       }
@@ -37,65 +39,94 @@
         font-size: 36px;
         font-weight: bold;
         color: #333;
-        margin-bottom: 10px; /* Reduced margin */
+        margin-bottom: 15px;
       }
 
       .cash-instruction p {
         font-size: 18px;
         color: #555;
-        margin-bottom: 10px; /* Reduced margin */
+        margin-bottom: 10px;
       }
 
       .cash-instruction img {
         width: 200px;
-        margin: 10px 0; /* Reduced margin to bring buttons closer */
+        margin: 10px 0;
       }
 
       .btn-primary,
       .btn-secondary,
-      .btn-assist,
       .btn-next {
         font-size: 18px;
-        padding: 10px 20px;
+        padding: 12px 30px;
         border-radius: 50px;
         width: 220px;
       }
 
       .btn-primary {
-        background-color: #007bff;
+        background: linear-gradient(
+          135deg,
+          #007bff,
+          #0056b3
+        ); /* Gradient button */
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
       }
 
       .btn-primary:hover {
-        background-color: #0056b3;
+        background: #0056b3;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px); /* Slight lift on hover */
       }
 
       .btn-secondary {
         background-color: #6c757d;
+        color: white;
+        border: none;
       }
 
       .btn-secondary:hover {
         background-color: #5a6268;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
       .btn-assist {
-        background-color: #17a2b8;
+        background: linear-gradient(
+          135deg,
+          #17a2b8,
+          #138496
+        ); /* Gradient background */
         color: white;
+        font-size: 16px;
+        padding: 12px 30px;
+        border-radius: 50px;
+        border: none;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 1.2;
         position: absolute;
         top: 20px;
         right: 20px;
         z-index: 1001;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+        transition: all 0.3s ease;
       }
 
       .btn-assist:hover {
-        background-color: #138496;
+        background-color: #117a8b;
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-3px);
       }
 
       .btn-next {
         background-color: #28a745;
+        color: white;
+        border: none;
       }
 
       .btn-next:hover {
         background-color: #218838;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
       .button-group {
@@ -103,8 +134,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px; /* Reduced gap between buttons */
-        margin-top: 10px; /* Reduced margin between buttons and image */
+        gap: 10px;
+        margin-top: 10px;
       }
 
       .navigation-buttons {
@@ -144,7 +175,7 @@
     <div id="videoCallWindow">
       <div style="padding: 20px; color: white">
         <h3>Video</h3>
-        <img src="video-frame.png" alt="Video Insturction" style="width: 60%" />
+        <img src="video-frame.png" alt="Video Instruction" style="width: 60%" />
       </div>
     </div>
 
@@ -157,7 +188,6 @@
       </div>
 
       <div class="button-group">
-        <!-- Insert Cash Button -->
         <button
           id="insertCashBtn"
           class="btn btn-primary"
@@ -165,8 +195,6 @@
         >
           Insert Cash
         </button>
-
-        <!-- Pay with Card Button -->
         <button class="btn btn-primary" onclick="proceedToCardPayment()">
           Pay with Card
         </button>
@@ -191,42 +219,36 @@
     <script>
       let videoOpen = false;
 
-      // Function to simulate cash insertion (just changing the button text)
       function insertCash() {
         const btn = document.getElementById("insertCashBtn");
         btn.innerHTML = "Cash Accepted";
         btn.disabled = true;
       }
 
-      // Function to simulate proceeding to card payment page
       function proceedToCardPayment() {
-        window.location.href = "paywithcard.html"; // Redirect to card payment page
+        window.location.href = "paywithcard.html";
       }
 
-      // Function to navigate to the next page (confirmation)
       function goToNextPage() {
-        window.location.href = "confirmation.html"; // Redirect to the confirmation page
+        window.location.href = "confirmation.html";
       }
 
-      // Function to toggle the video assistance window and adjust layout
       function toggleVideoWindow() {
         const videoWindow = document.getElementById("videoCallWindow");
         const formContainer = document.getElementById("formContainer");
         const assistButton = document.getElementById("assistButton");
 
         if (!videoOpen) {
-          // Show the video window, move content down
           videoWindow.style.display = "block";
-          formContainer.style.marginTop = "50vh"; // Move content down to make space for video
+          formContainer.style.marginTop = "50vh";
           assistButton.innerHTML = "Close Video";
         } else {
-          // Hide the video window, move content back up
           videoWindow.style.display = "none";
-          formContainer.style.marginTop = "0"; // Move content back to center
+          formContainer.style.marginTop = "0";
           assistButton.innerHTML = "Tap for Operator Assistance";
         }
 
-        videoOpen = !videoOpen; // Toggle video state
+        videoOpen = !videoOpen;
       }
     </script>
   </body>
