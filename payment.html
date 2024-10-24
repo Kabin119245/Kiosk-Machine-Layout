@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Kiosk - Step 2: Payment</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+      }
+
+      .payment-container {
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      h2 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .payment-input {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .payment-options {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .payment-option {
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .payment-option img {
+        width: 100px;
+        height: auto;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .payment-option.selected img {
+        border-color: #007bff;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5);
+        transform: scale(1.05);
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        font-size: 18px;
+        padding: 12px 40px;
+        border-radius: 50px;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        font-size: 18px;
+        padding: 12px 40px;
+        border-radius: 50px;
+        margin-right: 20px;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      .action-buttons {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+      }
+
+      /* Media query for smaller screens */
+      @media (max-width: 768px) {
+        .btn-primary,
+        .btn-secondary {
+          padding: 12px 20px;
+          font-size: 16px;
+        }
+      }
+
+      /* Error message styling */
+      .error {
+        color: red;
+        font-size: 14px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container payment-container">
+      <h2 class="mb-4">Payment Information</h2>
+
+      <!-- Payment Method Options -->
+      <div class="payment-options">
+        <div
+          class="payment-option"
+          onclick="selectPayment(this)"
+          data-type="Visa"
+        >
+          <img src="images/visa.png" alt="Visa" />
+        </div>
+        <div
+          class="payment-option"
+          onclick="selectPayment(this)"
+          data-type="MasterCard"
+        >
+          <img src="images/mastercard.png" alt="MasterCard" />
+        </div>
+      </div>
+
+      <!-- Error message for payment method -->
+      <div id="paymentMethodError" class="error">
+        Please select a payment method.
+      </div>
+
+      <!-- Payment Input Fields -->
+      <div class="payment-input">
+        <input
+          type="text"
+          id="cardNumber"
+          class="form-control mb-1"
+          placeholder="Card Number"
+          pattern="\d{16}"
+          required
+          title="Please enter a valid 16-digit card number."
+        />
+        <div id="cardNumberError" class="error">
+          Card number must be 16 digits.
+        </div>
+
+        <input
+          type="text"
+          id="expiryDate"
+          class="form-control mb-1"
+          placeholder="Expiry Date (MM/YY)"
+          required
+          title="Please enter a valid expiry date in the format MM/YY."
+        />
+        <div id="expiryDateError" class="error">
+          Expiry date must be in MM/YY format.
+        </div>
+
+        <input
+          type="text"
+          id="cvv"
+          class="form-control mb-1"
+          placeholder="CVV"
+          pattern="\d{3}"
+          required
+          title="Please enter a valid 3-digit CVV."
+        />
+        <div id="cvvError" class="error">CVV must be 3 digits.</div>
+      </div>
+
+      <!-- Action Buttons (Go Back & Pay Now) -->
+      <div class="action-buttons">
+        <a href="drivinglicense.html" class="btn btn-secondary">Go Back</a>
+        <button class="btn btn-primary" onclick="validateForm()">
+          Pay Now
+        </button>
+      </div>
+
+      <!-- Error message for invalid form -->
+      <div id="formError" class="error">
+        Please fill out the form correctly.
+      </div>
+    </div>
+
+    <script>
+      let selectedPaymentMethod = null;
+
+      // Function to select a payment option
+      function selectPayment(element) {
+        const options = document.querySelectorAll(".payment-option");
+        options.forEach((option) => option.classList.remove("selected"));
+        element.classList.add("selected");
+        selectedPaymentMethod = element.getAttribute("data-type");
+
+        // Hide payment method error
+        document.getElementById("paymentMethodError").style.display = "none";
+      }
+
+      // Function to validate form inputs
+      function validateForm() {
+        const cardNumber = document.getElementById("cardNumber");
+        const expiryDate = document.getElementById("expiryDate");
+        const cvv = document.getElementById("cvv");
+        let valid = true;
+
+        // Check if payment method is selected
+        if (!selectedPaymentMethod) {
+          document.getElementById("paymentMethodError").style.display = "block";
+          valid = false;
+        }
+
+        // Validate card number
+        if (!cardNumber.value.match(/^\d{16}$/)) {
+          document.getElementById("cardNumberError").style.display = "block";
+          valid = false;
+        } else {
+          document.getElementById("cardNumberError").style.display = "none";
+        }
+
+        // Validate expiry date
+        if (!expiryDate.value.match(/^(0[1-9]|1[0-2])\/\d{2}$/)) {
+          document.getElementById("expiryDateError").style.display = "block";
+          valid = false;
+        } else {
+          document.getElementById("expiryDateError").style.display = "none";
+        }
+
+        // Validate CVV
+        if (!cvv.value.match(/^\d{3}$/)) {
+          document.getElementById("cvvError").style.display = "block";
+          valid = false;
+        } else {
+          document.getElementById("cvvError").style.display = "none";
+        }
+
+        if (valid) {
+          window.location.href = "confirmation.html";
+        }
+      }
+
+      // Automatically add "/" after entering two digits for the month in the expiry date
+      document
+        .getElementById("expiryDate")
+        .addEventListener("input", function (e) {
+          const value = e.target.value;
+          if (value.length === 2 && !value.includes("/")) {
+            e.target.value = value + "/";
+          }
+        });
+    </script>
+  </body>
+</html>

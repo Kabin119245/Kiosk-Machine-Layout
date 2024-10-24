@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Kiosk - Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url("images/hotel.jpg") no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.3
+        ); /* Black overlay with 60% opacity */
+      }
+
+      .welcome-container {
+        position: relative;
+        text-align: center;
+        color: white;
+        z-index: 1;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .welcome-title {
+        font-size: 60px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+      .search-button {
+        background-color: #007bff;
+        color: white;
+        border-radius: 50px;
+        padding: 15px 40px;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .search-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay"></div>
+    <div class="container welcome-container">
+      <h1 class="welcome-title">WELCOME to Hotel Annapurna</h1>
+      <a href="roomlist.html" class="btn search-button">Search Rooms</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

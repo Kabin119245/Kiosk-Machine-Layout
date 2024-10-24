@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Kiosk - Step 1: Driving License</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f0f0f5;
+        font-family: "Arial", sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .form-container {
+        text-align: center;
+        max-width: 100%; /* Ensures responsiveness */
+        padding: 0 20px; /* Adds padding for smaller screens */
+      }
+
+      h2 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      .form-input {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .license-instruction {
+        max-width: 300px;
+        margin: 10px auto; /* Reduces the margin for less vertical space */
+      }
+
+      .license-instruction img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .license-instruction p {
+        font-size: 18px;
+        color: #555;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        font-size: 20px;
+        padding: 12px 30px;
+        border-radius: 50px;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        font-size: 20px;
+        padding: 12px 30px;
+        border-radius: 50px;
+        margin-right: 15px;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      .action-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      /* Prevents body from scrolling and ensures everything fits without scrolling */
+      html,
+      body {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container form-container">
+      <h2>Enter Driving License ID</h2>
+      <div class="license-instruction">
+        <p>Please enter your Driving License ID as shown in the image below:</p>
+        <img src="images/license.png" alt="Driving License Example" />
+      </div>
+      <div class="form-input">
+        <input
+          type="text"
+          class="form-control mb-3"
+          placeholder="Driving License ID"
+        />
+      </div>
+      <div class="action-buttons">
+        <a href="roomlist.html" class="btn btn-secondary">Go Back</a>
+        <a href="payment.html" class="btn btn-primary">Next Step</a>
+      </div>
+    </div>
+  </body>
+</html>
